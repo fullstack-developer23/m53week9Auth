@@ -3,8 +3,9 @@ const userRouter = Router();
 // const bookFindRouter = Router();
 
 const {addUser, allUsers} = require("./controllers");
+const {hashPass} = require("../middleware/auth");
 
-userRouter.post("/", addUser);
+userRouter.post("/", hashPass,addUser);
 userRouter.get("/", allUsers);
 
 module.exports = userRouter;
