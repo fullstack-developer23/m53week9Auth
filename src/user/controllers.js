@@ -19,6 +19,17 @@ const addUser = async (req, res) => {
     }
 };
 
+const login = async (req, res) => {
+    try{
+        console.log("Hello from login", req.user);
+        res.status(201).json({ message: "login successful", user: req.user})
+    }
+    catch (error)
+    {
+        res.status(500).json({ error: error, message: error.message });
+    }
+}
+
 const allUsers = async (req, res) => {
     console.log(req.body);
     try {
@@ -32,6 +43,7 @@ const allUsers = async (req, res) => {
 };
 
 module.exports = {
-   addUser,
-   allUsers
+    addUser: addUser,
+   allUsers: allUsers,
+   login: login,
 };
