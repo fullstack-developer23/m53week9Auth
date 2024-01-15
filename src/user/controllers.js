@@ -1,4 +1,5 @@
 const User = require("./model");
+const Book = require("../book/model");
 
 const addUser = async (req, res) => {
     console.log(req.body);
@@ -19,7 +20,18 @@ const addUser = async (req, res) => {
     }
 };
 
-const allUsers = async (req, res) => {
+const login = async (req, res) => {
+    try{
+        console.log("Hello from login", req.user);
+        res.status(201).json({ message: "login successful", user: req.user})
+    }
+    catch (error)
+    {
+        res.status(500).json({ error: error, message: error.message });
+    }
+}
+
+const getAllUsers = async (req, res) => {
     console.log(req.body);
     try {
         const allUsers = await User.findAll();
@@ -31,7 +43,25 @@ const allUsers = async (req, res) => {
     }
 };
 
+const updateFavBook = async (req, res) => {
+    // console.log("hello favBook", req.body);
+    try {
+        const result = await User.update (
+            { BookId: req.body.BookId },
+            { where: { username: req.body.username } }
+        )        
+
+        const book = await Book.findOne({ where: { id: req.body.BookId} });
+        res.status(201).json({ message: `Book ID updated`, book: book });
+    }
+    catch (error) {
+        res.status(500).json({ error: error, message: error.message });
+    }
+};
+
 module.exports = {
-   addUser,
-   allUsers
+    addUser: addUser,
+    getAllUsers: getAllUsers,
+   login: login,
+   updateFavBook: updateFavBook,
 };

@@ -1,20 +1,18 @@
-//Create a user, email, password
 const {DataTypes} = require("sequelize");
 const sequelize = require("../db/connection");
-const User = sequelize.define("User", {
-    username: {
+const Book = sequelize.define("Book", {
+    title: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
     },
-    email: {
+    author: {
         type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
-    password: {
+    genre: {
         type: DataTypes.STRING,
     },
 });
 
-module.exports = User;
+module.exports = Book;
